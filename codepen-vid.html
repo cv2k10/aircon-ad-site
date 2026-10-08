@@ -4,20 +4,135 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
     <title>CoolNest — A Cooler Tomorrow</title>
     <style>
-        * {
+        /* =========================================================
+           0. DESIGN TOKENS (CSS custom properties)
+           All colors, sizes, offsets and type values live here.
+           Breakpoints below mostly just reassign these tokens.
+           ========================================================= */
+        :root {
+            /* ---------- Colors & backgrounds ---------- */
+            --pageTextColor: #0b234c;
+            --headerBg: #ffffff;
+            --navTextColor: #152444;
+            --navActiveUnderline: #2897ff;
+            --navMobileDivider: #e6edf5;
+            --navMobileShadow: 0 12px 28px #09234722;
+            --brandAccentColor: #2997ff;
+            --brandTaglineColor: #526078;
+            --heroBg: #062238;
+            --heroMobileBg: #031c32;
+            --heroMobileFade: #031c3200;
+            --heroTabletScrim: #031c39bb;
+            --eyebrowColor: #66dbfa;
+            --headlineAccentColor: #70dcf1;
+            --heroTextColor: #ffffff;
+            --primaryBtnBg: #2b98ff;
+            --secondaryBtnBorder: #3daaff;
+            --secondaryBtnBg: #0a253b99;
+            --shopBtnBg: #0d58c8;
+            --featureIconBorder: #aeeaff;
+            --featureDividerColor: #72b3ce77;
+            --featureMutedText: #b9d9ec;
+            --featureCardBg: #ffffff0a;
+            --featureCardBorder: #72b3ce40;
+            --outsideTempColor: #e83c0c;
+            --insideIconBorder: #b0edff;
+            --insideTextShadow: 0 2px 12px #062b47;
+            --focusRingColor: #64dbf6;
+            --dialogTextColor: #143254;
+            --dialogCloseColor: #274467;
+            --dialogBtnBg: #1269da;
+            --dialogInputBorder: #bac8d8;
+            --dialogBackdrop: #031b37aa;
+            --dialogShadow: 0 20px 90px #001c3f50;
+
+            /* ---------- Layout sizes ---------- */
+            --pageGutter: 6%;
+            --navbarHeight: 77px;
+            --headerGap: 35px;
+            --headerActionsGap: 36px;
+            --navGap: 40px;
+            --navMarginLeft: 30px;
+            --tapTargetSize: 44px;
+            --brandGap: 16px;
+            --brandLogoWidth: 60px;
+            --brandLogoHeight: 40px;
+            --shopPadding: 14px 29px;
+            --heroMinHeight: 864px;
+            --heroCopyOffset: 6%;
+            --heroCopyWidth: 620px;
+            --heroCopyPaddingTop: 90px;
+            --heroCopyPaddingBottom: 0px;
+            --eyebrowGap: 30px;
+            --eyebrowRuleWidth: 38px;
+            --introMargin: 26px 0 31px;
+            --ctaHeight: 62px;
+            --ctaPaddingX: 43px;
+            --ctaGap: 20px;
+            --featuresWidth: 580px;
+            --featuresMarginTop: 58px;
+            --featureIconSize: 53px;
+            --featureIconGlyph: 38px;
+            --dialogPadding: 40px;
+
+            /* ---------- Positioning offsets ---------- */
+            --outsideTempLeft: 41.3%;
+            --outsideTempTop: 23.5%;
+            --insideTempRight: 8.5%;
+            --insideTempTop: 21.3%;
+            --insideTempBottom: auto;
+            --scrollCueBottom: 26px;
+            --heroVideoPosition: center;
+
+            /* ---------- Typography ---------- */
+            --brandWordmarkSize: 40px;
+            --brandTaglineSize: 10px;
+            --brandTaglineTracking: 2.6px;
+            --navFontSize: 16px;
+            --eyebrowSize: 15px;
+            --eyebrowTracking: 4px;
+            --h1Size: 96px;
+            --h1LineHeight: .89;
+            --h1Tracking: -3px;
+            --introSize: 26px;
+            --introLineHeight: 1.28;
+            --ctaFontSize: 20px;
+            --featureTitleSize: 16px;
+            --featureTextSize: 12px;
+            --insideTempSize: 38px;
+            --insideLabelSize: 17px;
+            --dialogTitleSize: 30px;
+
+            /* ---------- Mobile hero stage (first screen) ---------- */
+            --mobileStageHeight: clamp(560px, calc(100svh - var(--navbarHeight)), 820px);
+            --heroTextPaddingTop: 0px;
+            --heroMobileScrim: #031c32cc;
+            --heroTextShadow: 0 2px 18px #031c3299;
+        }
+
+        /* =========================================================
+           1. RESET & BASE
+           ========================================================= */
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box
         }
 
         html {
-            scroll-behavior: smooth
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%
         }
 
         body {
             margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            color: #0b234c
+            color: var(--pageTextColor);
+            -webkit-font-smoothing: antialiased
         }
 
         button,
@@ -37,7 +152,7 @@
 
         button:focus-visible,
         a:focus-visible {
-            outline: 3px solid #64dbf6;
+            outline: 3px solid var(--focusRingColor);
             outline-offset: 5px
         }
 
@@ -57,181 +172,254 @@
             stroke-linejoin: round
         }
 
+        /* =========================================================
+           2. LAYOUT — header
+           ========================================================= */
         .header {
-            height: 77px;
-            padding: 0 6%;
+            position: relative;
+            z-index: 10;
+            height: var(--navbarHeight);
+            padding: 0 var(--pageGutter);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 35px;
-            background: #fff
-        }
-
-        .brand {
-            display: flex;
-            gap: 16px;
-            align-items: center
-        }
-
-        .brand img {
-            width: 60px;
-            height: 40px;
-            object-fit: contain
-        }
-
-        .brand strong {
-            font-size: 40px;
-            letter-spacing: -1.9px;
-            line-height: 1;
-            font-weight: 750
-        }
-
-        .brand strong span {
-            color: #2997ff
-        }
-
-        .brand small {
-            display: block;
-            font-size: 10px;
-            letter-spacing: 2.6px;
-            margin-top: 5px;
-            padding-left: 3px;
-            color: #526078
+            gap: var(--headerGap);
+            background: var(--headerBg)
         }
 
         .header nav {
             display: flex;
-            gap: 40px;
+            gap: var(--navGap);
             align-items: center;
-            margin-left: 30px
-        }
-
-        .header nav a,
-        .header nav button {
-            font-size: 16px;
-            border: 0;
-            background: none;
-            padding: 16px 0;
-            position: relative;
-            white-space: nowrap;
-            color: #152444
-        }
-
-        .header nav .active:after {
-            content: "";
-            position: absolute;
-            height: 2px;
-            background: #2897ff;
-            bottom: 3px;
-            left: -5px;
-            right: -5px
+            margin-left: var(--navMarginLeft)
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 36px
+            gap: var(--headerActionsGap)
         }
 
-        .search {
-            border: 0;
-            background: none;
-            padding: 5px
-        }
-
-        .shop {
-            border: 0;
-            border-radius: 40px;
-            background: #0d58c8;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding: 14px 29px;
-            font-weight: 600
-        }
-
-        .menu-toggle {
-            display: none
-        }
-
+        /* =========================================================
+           3. LAYOUT — hero
+           ========================================================= */
         .hero {
             position: relative;
-            min-height: 864px;
-            height: calc(100svh - 77px);
-            background: #062238 url('https://cdn.jsdelivr.net/gh/cv2k10/aircon-ad-site@main/assets/cool-living-room.gif') center/cover no-repeat;
-            color: #fff;
+            min-height: var(--heroMinHeight);
+            height: calc(100svh - var(--navbarHeight));
+            background: var(--heroBg);
+            color: var(--heroTextColor);
             overflow: hidden
         }
 
         .copy {
             position: relative;
             z-index: 1;
-            margin-left: 6%;
-            padding-top: 90px;
-            width: 620px
+            margin-left: var(--heroCopyOffset);
+            padding-top: var(--heroCopyPaddingTop);
+            padding-bottom: var(--heroCopyPaddingBottom);
+            width: var(--heroCopyWidth)
+        }
+
+        /* =========================================================
+           4. POSITIONING — hero overlays
+           ========================================================= */
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: var(--heroVideoPosition);
+            pointer-events: none
+        }
+
+        .hero::before {
+            z-index: 1;
+            pointer-events: none
+        }
+
+        .outside {
+            position: absolute;
+            z-index: 2;
+            left: var(--outsideTempLeft);
+            top: var(--outsideTempTop)
+        }
+
+        .inside {
+            position: absolute;
+            z-index: 2;
+            right: var(--insideTempRight);
+            top: var(--insideTempTop);
+            bottom: var(--insideTempBottom)
+        }
+
+        .scroll {
+            position: absolute;
+            z-index: 2;
+            bottom: var(--scrollCueBottom);
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        /* =========================================================
+           5. TYPOGRAPHY
+           ========================================================= */
+        .brand strong {
+            font-size: var(--brandWordmarkSize);
+            letter-spacing: -.0475em;
+            line-height: 1;
+            font-weight: 750
+        }
+
+        .brand strong span {
+            color: var(--brandAccentColor)
+        }
+
+        .brand small {
+            display: block;
+            font-size: var(--brandTaglineSize);
+            letter-spacing: var(--brandTaglineTracking);
+            margin-top: 5px;
+            padding-left: 3px;
+            color: var(--brandTaglineColor);
+            white-space: nowrap
         }
 
         .eyebrow {
-            margin: 0 0 30px;
-            font-size: 15px;
-            letter-spacing: 4px;
-            color: #66dbfa;
+            margin: 0 0 var(--eyebrowGap);
+            font-size: var(--eyebrowSize);
+            letter-spacing: var(--eyebrowTracking);
+            color: var(--eyebrowColor);
             display: flex;
             align-items: center;
             gap: 10px
         }
 
         .eyebrow span {
-            width: 38px;
+            flex: none;
+            width: var(--eyebrowRuleWidth);
             height: 1px;
-            background: #66dbfa
+            background: var(--eyebrowColor)
         }
 
         h1 {
-            font-size: 96px;
-            line-height: .89;
-            letter-spacing: -3px;
+            font-size: var(--h1Size);
+            line-height: var(--h1LineHeight);
+            letter-spacing: var(--h1Tracking);
             margin: 0;
             font-weight: 800
         }
 
         h1 span {
-            color: #70dcf1
+            color: var(--headlineAccentColor)
         }
 
         .intro {
-            font-size: 26px;
-            line-height: 1.28;
-            margin: 26px 0 31px
+            font-size: var(--introSize);
+            line-height: var(--introLineHeight);
+            margin: var(--introMargin)
         }
 
-        .cta {
+        /* =========================================================
+           6. COMPONENTS
+           ========================================================= */
+
+        /* ---- 6.1 Brand ---- */
+        .brand {
             display: flex;
-            gap: 20px
+            gap: var(--brandGap);
+            align-items: center;
+            min-width: 0
         }
 
-        .cta button {
-            height: 62px;
+        .brand img {
+            width: var(--brandLogoWidth);
+            height: var(--brandLogoHeight);
+            object-fit: contain;
+            flex: none
+        }
+
+        /* ---- 6.2 Navigation ---- */
+        .header nav a,
+        .header nav button {
+            font-size: var(--navFontSize);
+            border: 0;
+            background: none;
+            padding: 16px 0;
+            position: relative;
+            white-space: nowrap;
+            color: var(--navTextColor)
+        }
+
+        .header nav .active::after {
+            content: "";
+            position: absolute;
+            height: 2px;
+            background: var(--navActiveUnderline);
+            bottom: 3px;
+            left: -5px;
+            right: -5px
+        }
+
+        .menu-toggle {
+            display: none
+        }
+
+        /* ---- 6.3 Header buttons ---- */
+        .search {
+            width: var(--tapTargetSize);
+            height: var(--tapTargetSize);
+            display: grid;
+            place-items: center;
+            border: 0;
+            border-radius: 50%;
+            background: none;
+            padding: 0;
+            color: var(--navTextColor)
+        }
+
+        .shop {
+            border: 0;
             border-radius: 40px;
-            font-size: 20px;
+            background: var(--shopBtnBg);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: var(--shopPadding);
             font-weight: 600;
-            padding: 0 43px;
-            color: white;
             white-space: nowrap
         }
 
-        .primary {
-            border: 1px solid #2b98ff;
-            background: #2b98ff;
+        /* ---- 6.4 Hero CTA buttons ---- */
+        .cta {
             display: flex;
-            gap: 15px;
-            align-items: center
+            gap: var(--ctaGap)
+        }
+
+        .cta button {
+            height: var(--ctaHeight);
+            border-radius: 40px;
+            font-size: var(--ctaFontSize);
+            font-weight: 600;
+            padding: 0 var(--ctaPaddingX);
+            color: #fff;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px
+        }
+
+        .primary {
+            border: 1px solid var(--primaryBtnBg);
+            background: var(--primaryBtnBg)
         }
 
         .secondary {
-            border: 2px solid #3daaff;
-            background: #0a253b99
+            border: 2px solid var(--secondaryBtnBorder);
+            background: var(--secondaryBtnBg)
         }
 
         .cta button:hover,
@@ -239,10 +427,11 @@
             filter: brightness(1.12)
         }
 
+        /* ---- 6.5 Feature list ---- */
         .features {
             display: flex;
-            margin-top: 58px;
-            width: 580px;
+            margin-top: var(--featuresMarginTop);
+            width: var(--featuresWidth);
             scroll-margin-top: 35px
         }
 
@@ -250,7 +439,7 @@
             display: flex;
             gap: 15px;
             flex: 1;
-            border-right: 1px solid #72b3ce77;
+            border-right: 1px solid var(--featureDividerColor);
             padding: 0 14px
         }
 
@@ -264,41 +453,39 @@
         }
 
         .icon {
-            border: 2px solid #aeeaff;
+            border: 2px solid var(--featureIconBorder);
             border-radius: 50%;
-            width: 53px;
-            height: 53px;
+            width: var(--featureIconSize);
+            height: var(--featureIconSize);
             flex: none;
             display: grid;
             place-items: center
         }
 
         .icon svg {
-            width: 38px;
-            height: 38px
+            width: var(--featureIconGlyph);
+            height: var(--featureIconGlyph)
         }
 
         .features h2 {
-            font-size: 16px;
+            font-size: var(--featureTitleSize);
             font-weight: 400;
             line-height: 1.25;
             margin: 5px 0 8px
         }
 
         .features p {
-            font-size: 12px;
+            font-size: var(--featureTextSize);
             line-height: 1.4;
             margin: 0;
-            color: #b9d9ec
+            color: var(--featureMutedText)
         }
 
+        /* ---- 6.6 Temperature badges ---- */
         .outside {
-            position: absolute;
-            left: 41.3%;
-            top: 23.5%;
             display: flex;
             align-items: center;
-            color: #e83c0c;
+            color: var(--outsideTempColor);
             gap: 5px
         }
 
@@ -314,24 +501,23 @@
         }
 
         .thermometer {
-            font-size: 50px
+            width: 28px;
+            height: 64px;
+            stroke-width: 1.7
         }
 
         .inside {
-            position: absolute;
-            right: 8.5%;
-            top: 21.3%;
             font-stretch: condensed
         }
 
         .inside>strong {
             display: block;
-            font-size: 38px;
+            font-size: var(--insideTempSize);
             letter-spacing: -1px
         }
 
         .inside>span {
-            font-size: 17px;
+            font-size: var(--insideLabelSize);
             letter-spacing: 1px
         }
 
@@ -345,7 +531,7 @@
         .inside svg {
             width: 35px;
             height: 35px;
-            border: 1px solid #b0edff;
+            border: 1px solid var(--insideIconBorder);
             border-radius: 50%;
             padding: 5px
         }
@@ -355,11 +541,8 @@
             line-height: 1.1
         }
 
+        /* ---- 6.7 Scroll cue ---- */
         .scroll {
-            position: absolute;
-            bottom: 26px;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             align-items: center;
             flex-direction: column;
@@ -371,46 +554,50 @@
         .mouse {
             height: 40px;
             width: 25px;
-            border: 2px solid white;
+            border: 2px solid #fff;
             border-radius: 15px;
             position: relative
         }
 
-        .mouse:after {
+        .mouse::after {
             content: "";
             position: absolute;
             top: 7px;
             left: 10px;
             width: 2px;
             height: 10px;
-            background: white
+            background: #fff
         }
 
         .chevron {
             width: 10px;
             height: 10px;
-            border-right: 2px solid white;
-            border-bottom: 2px solid white;
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
             transform: rotate(45deg)
         }
 
+        /* ---- 6.8 Dialog ---- */
         dialog {
             border: 0;
             border-radius: 22px;
-            padding: 40px;
+            padding: var(--dialogPadding);
             width: min(480px, calc(100% - 32px));
-            color: #143254;
-            box-shadow: 0 20px 90px #001c3f50
+            max-height: calc(100svh - 32px);
+            overflow: auto;
+            color: var(--dialogTextColor);
+            box-shadow: var(--dialogShadow)
         }
 
         dialog::backdrop {
-            background: #031b37aa;
+            background: var(--dialogBackdrop);
             backdrop-filter: blur(5px)
         }
 
         dialog h2 {
-            font-size: 30px;
-            margin: 0 25px 20px 0
+            font-size: var(--dialogTitleSize);
+            line-height: 1.2;
+            margin: 0 32px 16px 0
         }
 
         dialog p {
@@ -419,29 +606,35 @@
 
         dialog .close {
             position: absolute;
-            right: 16px;
-            top: 10px;
+            right: 8px;
+            top: 8px;
+            width: var(--tapTargetSize);
+            height: var(--tapTargetSize);
             font-size: 32px;
+            line-height: 1;
             background: none;
             border: 0;
-            color: #274467
+            color: var(--dialogCloseColor)
         }
 
         .dialog-done {
-            background: #1269da;
-            color: white;
+            background: var(--dialogBtnBg);
+            color: #fff;
             border: 0;
             border-radius: 24px;
+            min-height: var(--tapTargetSize);
             padding: 12px 25px;
             margin-top: 12px
         }
 
         dialog input {
             width: 100%;
+            margin-top: 8px;
             padding: 12px;
-            border: 1px solid #bac8d8;
+            border: 1px solid var(--dialogInputBorder);
             border-radius: 8px;
-            font: inherit
+            font: inherit;
+            font-size: 16px /* 16px+ prevents iOS zoom on focus */
         }
 
         dialog label {
@@ -449,110 +642,114 @@
             margin-bottom: 10px
         }
 
-        @media(min-width:1800px) {
-            .copy {
-                padding-top: clamp(90px, 10vh, 180px)
-            }
-
-            .hero {
-                background-position: center
-            }
-
-            .inside {
-                right: 9%
+        /* =========================================================
+           7. RESPONSIVE — large screens (≥1800px)
+           ========================================================= */
+        @media (min-width:1800px) {
+            :root {
+                --heroCopyPaddingTop: clamp(90px, 10vh, 180px);
+                --insideTempRight: 9%;
             }
         }
 
-        @media(max-width:1200px) {
-            .header {
-                padding: 0 4%;
-                gap: 20px
-            }
-
-            .header nav {
-                gap: 24px;
-                margin: 0
-            }
-
-            .brand strong {
-                font-size: 32px
-            }
-
-            .brand img {
-                width: 45px
-            }
-
-            .brand {
-                gap: 10px
-            }
-
-            .header-actions {
-                gap: 15px
-            }
-
-            .shop {
-                padding: 13px 22px
-            }
-
-            .copy {
-                margin-left: 5%;
-                width: 550px
-            }
-
-            h1 {
-                font-size: 82px
-            }
-
-            .intro {
-                font-size: 23px
-            }
-
-            .inside {
-                right: 5%
-            }
-
-            .hero {
-                background-position: 55% center
-            }
-
-            .features {
-                width: 550px
-            }
-
-            .cta button {
-                padding: 0 30px
+        /* =========================================================
+           8. RESPONSIVE — small desktop / laptop (≤1200px)
+           ========================================================= */
+        @media (max-width:1200px) {
+            :root {
+                --pageGutter: 4%;
+                --headerGap: 20px;
+                --headerActionsGap: 15px;
+                --navGap: 24px;
+                --navMarginLeft: 0px;
+                --brandWordmarkSize: 32px;
+                --brandLogoWidth: 45px;
+                --brandGap: 10px;
+                --shopPadding: 13px 22px;
+                --heroCopyOffset: 5%;
+                --heroCopyWidth: 550px;
+                --h1Size: 82px;
+                --introSize: 23px;
+                --ctaPaddingX: 30px;
+                --featuresWidth: 550px;
+                --insideTempRight: 5%;
+                --heroVideoPosition: 55% center;
             }
         }
 
-        @media(max-width:950px) {
-            .header {
-                height: 76px
+        /* =========================================================
+           9. RESPONSIVE — tablet & below (≤950px): collapsible nav
+           ========================================================= */
+        @media (max-width:950px) {
+            :root {
+                --navbarHeight: 76px;
+                --heroCopyPaddingTop: 65px;
+                --heroCopyPaddingBottom: 120px;
+                --insideTempRight: 4%;
+                --insideTempTop: 25%;
             }
 
             .menu-toggle {
-                display: block;
+                display: grid;
+                place-items: center;
+                order: 3;
+                width: var(--tapTargetSize);
+                height: var(--tapTargetSize);
+                margin-right: -10px;
+                padding: 0;
                 border: 0;
                 background: none;
-                font-size: 27px;
-                order: 3;
-                color: #153455
+                color: var(--navTextColor)
+            }
+
+            .menu-toggle svg {
+                width: 26px;
+                height: 26px;
+                stroke-width: 2
             }
 
             .header nav {
                 display: none;
                 position: absolute;
-                top: 76px;
+                top: 100%;
                 left: 0;
                 right: 0;
                 z-index: 5;
-                background: white;
-                padding: 20px 5%;
-                box-shadow: 0 10px 25px #09234722;
-                flex-wrap: wrap
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                margin: 0;
+                padding: 4px var(--pageGutter) 12px;
+                background: var(--headerBg);
+                box-shadow: var(--navMobileShadow)
             }
 
             .header nav.open {
                 display: flex
+            }
+
+            .header nav a,
+            .header nav button {
+                display: flex;
+                align-items: center;
+                min-height: 52px;
+                padding: 0;
+                font-size: 17px;
+                text-align: left;
+                border-bottom: 1px solid var(--navMobileDivider)
+            }
+
+            .header nav> :last-child {
+                border-bottom: 0
+            }
+
+            .header nav .active {
+                color: var(--shopBtnBg);
+                font-weight: 700
+            }
+
+            .header nav .active::after {
+                content: none
             }
 
             .header-actions {
@@ -561,235 +758,355 @@
 
             .hero {
                 height: auto;
-                min-height: calc(100svh - 76px)
+                min-height: calc(100svh - var(--navbarHeight))
             }
 
-            .copy {
-                padding: 65px 0 120px
-            }
-
-            .hero:before {
+            .hero::before {
                 content: "";
                 position: absolute;
                 inset: 0;
-                background: linear-gradient(90deg, #031c39bb, transparent)
+                background: linear-gradient(90deg, var(--heroTabletScrim), transparent)
             }
 
             .outside {
                 display: none
             }
-
-            .inside {
-                right: 4%;
-                top: 25%
-            }
         }
 
-        @media(max-width:600px) {
-            .header {
-                height: 72px;
-                padding: 0 5%;
-                gap: 12px
-            }
-
-            .brand strong {
-                font-size: 29px
-            }
-
-            .brand small {
-                font-size: 7px;
-                letter-spacing: 2px
-            }
-
-            .brand img {
-                width: 38px;
-                height: 32px
-            }
-
-            .brand {
-                gap: 7px
-            }
-
-            .header-actions .shop {
-                display: none
-            }
-
-            .header-actions {
-                gap: 0
-            }
-
-            .header nav {
-                top: 72px
+        /* =========================================================
+           10. RESPONSIVE — tablet only (601–950px)
+           ========================================================= */
+        @media (min-width:601px) and (max-width:950px) {
+            :root {
+                --heroCopyPaddingTop: 60px;
+                --heroCopyPaddingBottom: 55px;
+                --heroCopyWidth: min(90%, 620px);
+                --h1Size: clamp(60px, 9.5vw, 82px);
+                --introSize: 21px;
+                --introLineHeight: 1.4;
+                --ctaFontSize: 18px;
+                --ctaHeight: 56px;
+                --insideTempTop: auto;
+                --insideTempBottom: 24%;
+                --insideTempRight: 9%;
             }
 
             .hero {
                 min-height: 0;
-                padding-bottom: 330px;
-                background-size: auto 440px;
-                background-position: right bottom;
-                background-repeat: no-repeat;
-                background-color: #031c32
+                padding-bottom: 52%;
+                background-color: var(--heroMobileBg)
             }
 
-            .hero:before {
-                background: linear-gradient(#031c32 0%, #031c32 52%, transparent 75%)
+            .hero::before {
+                background: none
+            }
+
+            .hero-video {
+                top: auto;
+                height: auto;
+                aspect-ratio: 1745 / 901;
+                object-position: center bottom
+            }
+
+            .inside div,
+            .scroll .mouse {
+                display: none
+            }
+        }
+
+        /* =========================================================
+           11. RESPONSIVE — mobile (≤600px)
+           First screen = full-bleed video with headline + CTAs over a
+           top scrim. Features card sits below the stage.
+           ========================================================= */
+        @media (max-width:600px) {
+            :root {
+                /* layout */
+                --pageGutter: 20px;
+                --navbarHeight: 64px;
+                --headerGap: 4px;
+                --headerActionsGap: 0px;
+                --brandGap: 8px;
+                --brandLogoWidth: 34px;
+                --brandLogoHeight: 28px;
+                --heroCopyOffset: 0px;
+                --heroCopyWidth: 100%;
+                --heroCopyPaddingTop: 0px;
+                --heroCopyPaddingBottom: 40px;
+                --heroTextPaddingTop: 32px;
+                --eyebrowGap: 16px;
+                --eyebrowRuleWidth: 24px;
+                --introMargin: 14px 0 24px;
+                --ctaHeight: 50px;
+                --ctaPaddingX: 16px;
+                --ctaGap: 10px;
+                --featuresWidth: 100%;
+                --featuresMarginTop: 0px;
+                --featureIconSize: 44px;
+                --featureIconGlyph: 26px;
+                --dialogPadding: 28px 22px;
+
+                /* positioning */
+                --insideTempRight: var(--pageGutter);
+                --insideTempTop: calc(var(--mobileStageHeight) * .6);
+                --insideTempBottom: auto;
+                --heroVideoPosition: 72% center; /* focal point: AC unit + sofa */
+
+                /* typography (min 12px for any readable text) */
+                --brandWordmarkSize: 26px;
+                --brandTaglineSize: 9px;
+                --brandTaglineTracking: 1.6px;
+                --eyebrowSize: 12px;
+                --eyebrowTracking: 2.4px;
+                --h1Size: clamp(2.5rem, 10.5vw, 3.25rem);
+                --h1LineHeight: 1;
+                --h1Tracking: -.03em;
+                --introSize: 1rem;
+                --introLineHeight: 1.5;
+                --ctaFontSize: .9375rem;
+                --featureTitleSize: .875rem;
+                --featureTextSize: .8125rem;
+                --insideTempSize: 32px;
+                --insideLabelSize: 12px;
+                --dialogTitleSize: 24px;
+            }
+
+            /* header */
+            .header-actions .shop {
+                display: none
+            }
+
+            /* hero stage: video fills the first screen */
+            .hero {
+                min-height: 0;
+                background-color: var(--heroMobileBg)
+            }
+
+            .hero-video {
+                bottom: auto;
+                height: var(--mobileStageHeight)
+            }
+
+            /* top scrim keeps the headline readable; bottom fade blends into features */
+            .hero::before {
+                bottom: auto;
+                height: var(--mobileStageHeight);
+                background: linear-gradient(180deg,
+                        var(--heroMobileBg) 0%,
+                        var(--heroMobileScrim) 32%,
+                        var(--heroMobileFade) 62%,
+                        var(--heroMobileFade) 84%,
+                        var(--heroMobileBg) 100%)
             }
 
             .copy {
-                margin: 0;
-                padding: 45px 6% 30px;
-                width: 100%
+                padding-inline: var(--pageGutter)
             }
 
-            .eyebrow {
-                font-size: 10px;
-                letter-spacing: 2.3px;
-                margin-bottom: 25px
-            }
-
-            .eyebrow span {
-                width: 22px
-            }
-
-            h1 {
-                font-size: clamp(49px, 12.4vw, 74px);
-                letter-spacing: -2px;
-                line-height: .98
+            .hero-text {
+                min-height: var(--mobileStageHeight);
+                padding-top: var(--heroTextPaddingTop);
+                text-shadow: var(--heroTextShadow)
             }
 
             .intro {
-                font-size: 18px;
-                line-height: 1.5;
-                margin: 23px 0
+                max-width: 34ch
             }
 
             .desktop-break {
                 display: none
             }
 
+            /* CTA: one row when it fits, stacks on narrow phones */
             .cta {
-                gap: 12px;
                 flex-wrap: wrap
             }
 
             .cta button {
-                font-size: 15px;
-                height: 49px;
-                padding: 0 23px
+                flex: 1 1 auto;
+                gap: 8px;
+                text-shadow: none
             }
 
+            .cta svg {
+                width: 18px;
+                height: 18px
+            }
+
+            .secondary {
+                background: var(--heroMobileScrim)
+            }
+
+            /* features: stacked card below the stage */
             .features {
-                width: 100%;
-                margin-top: 34px;
-                gap: 10px
+                flex-direction: column;
+                gap: 14px;
+                padding: 18px;
+                border: 1px solid var(--featureCardBorder);
+                border-radius: 16px;
+                background: var(--featureCardBg)
             }
 
             .features article {
-                display: block;
-                padding: 0 8px
+                align-items: center;
+                gap: 14px;
+                padding: 0;
+                border: 0
             }
 
             .features article:first-child {
                 padding-left: 0
             }
 
-            .icon {
-                width: 40px;
-                height: 40px
+            .features article:not(:first-child) {
+                padding-top: 14px;
+                border-top: 1px solid var(--featureCardBorder)
             }
 
-            .icon svg {
-                width: 28px;
-                height: 28px
+            .features br {
+                display: none
             }
 
             .features h2 {
-                font-size: 12px;
-                margin-top: 12px
+                margin: 0 0 3px;
+                font-weight: 700;
+                letter-spacing: .04em
             }
 
             .features p {
-                font-size: 10px
+                line-height: 1.45
             }
 
+            /* overlays */
             .inside {
-                top: auto;
-                bottom: 220px;
-                right: 6%;
-                text-shadow: 0 2px 10px #062b47
+                text-shadow: var(--insideTextShadow)
             }
 
-            .inside>strong {
-                font-size: 28px
-            }
-
-            .inside>span {
-                font-size: 12px
-            }
-
-            .inside div {
-                display: none
-            }
-
+            .inside div,
             .scroll {
-                bottom: 16px
-            }
-
-            .scroll .mouse {
                 display: none
-            }
-
-            .scroll {
-                font-size: 8px;
-                gap: 7px
             }
         }
 
-        @media(prefers-reduced-motion:reduce) {
+        /* ---- 11.1 Narrow phones (≤360px): CTAs stack, so drop the badge lower ---- */
+        @media (max-width:360px) {
+            :root {
+                --insideTempTop: calc(var(--mobileStageHeight) * .8);
+            }
+        }
+
+        /* =========================================================
+           12. ACCESSIBILITY — reduced motion
+           ========================================================= */
+        @media (prefers-reduced-motion:reduce) {
             html {
                 scroll-behavior: auto
             }
         }
+    /* Mobile layout: readable type, consistent gutters, and generous touch targets. */
+@media(max-width:950px){
+  .menu-toggle,.search{min-width:44px;min-height:44px;display:grid;place-items:center;padding:10px}
+  .header nav.open{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:16px 5%}
+  .header nav a,.header nav button{text-align:left;padding:14px 16px;min-height:48px;border-radius:8px}
+  .header nav .active{background:#eef6ff}
+  .header nav .active:after{display:none}
+}
+@media(max-width:600px){
+  .header{height:72px;padding:0 20px;gap:4px}
+  .brand{gap:8px;flex-shrink:0}
+  .brand strong{font-size:28px;letter-spacing:-1.2px}
+  .brand small{font-size:8px;letter-spacing:1.6px;margin-top:4px}
+  .brand img{width:34px;height:30px}
+  .header-actions{margin-left:auto}
+  .hero{padding-bottom:340px;background-size:auto 340px;background-position:right bottom}
+  .hero:before{background:linear-gradient(to bottom,#031c32 0%,#031c32 calc(100% - 340px),transparent calc(100% - 280px))}
+  .copy{padding:36px 24px 28px;width:100%;margin:0}
+  .eyebrow{font-size:11px;line-height:1.5;letter-spacing:1.7px;margin-bottom:20px;gap:10px}
+  .eyebrow span{flex-shrink:0;width:20px}
+  h1{font-size:clamp(42px,11.5vw,64px);line-height:1.04;letter-spacing:-1.6px}
+  .intro{font-size:17px;line-height:1.55;margin:20px 0 24px;max-width:40ch;color:#e2edf5}
+  .cta{display:grid;grid-template-columns:1fr;gap:12px}
+  .cta button{width:100%;min-height:52px;height:auto;padding:15px 20px;font-size:16px;line-height:1.25;display:flex;justify-content:center;align-items:center}
+  .features{display:grid;grid-template-columns:1fr;width:100%;gap:0;margin-top:28px}
+  .features article,.features article:first-child,.features article:last-child{display:flex;align-items:center;gap:16px;padding:16px 0;border:0;border-bottom:1px solid #72b3ce40}
+  .features article:last-child{border-bottom:0;padding-bottom:0}
+  .icon{width:44px;height:44px;border-width:1.5px}
+  .icon svg{width:30px;height:30px}
+  .features h2{font-size:14px;font-weight:600;line-height:1.35;margin:0 0 4px;letter-spacing:.4px}
+  .features p{font-size:14px;line-height:1.5;margin:0;color:#bfd6e5}
+  .features br{display:none}
+  .features br:after{content:' '}
+  .inside{right:24px;bottom:220px;padding:10px 14px;background:#062238b3;border:1px solid #aeeaff55;border-radius:12px}
+  .inside>strong{font-size:28px;line-height:1.1}
+  .inside>span{font-size:12px;line-height:1.5}
+  .scroll{display:none}
+  dialog{padding:28px 24px;max-height:calc(100svh - 32px);overflow:auto}
+  dialog h2{font-size:26px;line-height:1.2;margin-right:32px}
+  dialog p{font-size:16px;line-height:1.6}
+  dialog .close{width:44px;height:44px;right:8px;top:8px}
+  .dialog-done{min-height:48px;font-size:16px}
+  dialog input{font-size:16px;min-height:48px;margin-top:8px}
+}
+@media(max-width:360px){
+  .header{padding:0 12px}
+  .copy{padding-left:20px;padding-right:20px}
+  .eyebrow{font-size:10px;letter-spacing:1.3px}
+  .brand strong{font-size:26px}
+}
 
-        @media(min-width:601px) and (max-width:950px) {
-            .hero {
-                min-height: 0;
-                padding-bottom: 52%;
-                background-size: 100% auto;
-                background-position: center bottom;
-                background-color: #031c32
-            }
+@media(max-width:600px){
+ .hero{height:auto;min-height:0;padding-bottom:340px;background:#031c32}
+ .hero-video{inset:auto 0 0;top:auto;bottom:0;width:100%;height:340px;aspect-ratio:auto;object-fit:cover;object-position:right bottom}
+ .hero::before{inset:0;height:auto;bottom:0;background:linear-gradient(to bottom,#031c32 0%,#031c32 calc(100% - 340px),transparent calc(100% - 280px))}
+ .hero-text{min-height:0;padding-top:0;text-shadow:none}
+ .features{padding:0;border:0;border-radius:0;background:transparent}
+ .features article:not(:first-child){border-top:0;padding-top:16px}
+ .inside{top:auto;bottom:220px}
+}
 
-            .hero:before {
-                background: none
-            }
+/* Put the room scene behind the opening mobile hero. */
+@media(max-width:600px){
+  .hero{padding-bottom:0;background-size:auto max(620px,100svh);background-position:82% top;background-color:#031c32}
+  .hero:before{background:linear-gradient(180deg,#031c32e6 0%,#031c32b3 28%,#031c3259 48%,#031c32e6 68%,#031c32 82%)}
+  .copy{padding-top:32px;padding-bottom:32px}
+  .intro{color:#f0f6fa;text-shadow:0 1px 8px #031c32}
+  .secondary{background:#031c32a6}
+  .features{margin-top:32px;padding:16px;border:1px solid #aeeaff30;border-radius:16px;background:#031c32e6;backdrop-filter:blur(8px)}
+  .features article:first-child{padding-top:0}
+  .inside{display:none}
+}
 
-            .copy {
-                padding: 60px 0 55px;
-                width: min(90%, 620px)
-            }
+/* Tablet hero keeps the room visible in the first viewport. */
+@media(min-width:601px) and (max-width:950px){
+  .hero{min-height:calc(100svh - 76px);padding-bottom:0;background-size:cover;background-position:85% top}
+  .hero:before{background:linear-gradient(90deg,#031c32dc 0%,#031c32a6 48%,#031c3240 100%)}
+  .copy{margin-left:5%;width:min(90%,620px);padding:clamp(40px,6vh,72px) 0 48px}
+  h1{font-size:clamp(60px,9vw,82px);line-height:1;letter-spacing:-2px}
+  .intro{font-size:21px;line-height:1.5;max-width:40ch;margin:24px 0 28px;text-shadow:0 1px 8px #031c32}
+  .cta{gap:16px;flex-wrap:wrap}
+  .cta button{font-size:18px;min-height:56px;height:auto;padding:16px 28px}
+  .secondary{background:#031c32a6}
+  .features{width:100%;margin-top:40px;padding:20px 12px;border:1px solid #aeeaff30;border-radius:16px;background:#031c32d9;backdrop-filter:blur(8px)}
+  .features article{gap:12px;padding:0 12px;min-width:0}
+  .features h2{font-size:14px;line-height:1.4}
+  .features p{font-size:13px;line-height:1.5}
+  .icon{width:44px;height:44px}
+  .icon svg{width:30px;height:30px}
+  .inside,.scroll{display:none}
+}
 
-            .inside {
-                top: auto;
-                bottom: 24%;
-                right: 9%
-            }
+@media(max-width:600px){
+ .hero{padding-bottom:0;background:#031c32}
+ .hero-video{inset:0;bottom:auto;top:0;width:100%;height:max(620px,100svh);aspect-ratio:auto;object-fit:cover;object-position:82% top}
+ .hero::before{inset:0;height:auto;background:linear-gradient(180deg,#031c32e6 0%,#031c32b3 28%,#031c3259 48%,#031c32e6 68%,#031c32 82%)}
+ .hero-text{min-height:0;padding-top:0;text-shadow:none}
+}
+@media(min-width:601px) and (max-width:950px){
+ .hero-video{inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:85% top}
+ .hero::before{inset:0;height:auto;background:linear-gradient(90deg,#031c32dc 0%,#031c32a6 48%,#031c3240 100%)}
+}
 
-            .inside div {
-                display: none
-            }
-
-            .scroll .mouse {
-                display: none
-            }
-        }
-
-        .thermometer {
-            width: 28px;
-            height: 64px;
-            stroke-width: 1.7
-        }
-    </style>
+</style>
 </head>
 
 <body>
@@ -813,55 +1130,75 @@
                 <circle cx="10" cy="10" r="7" />
                 <path d="m15 15 6 6" />
             </symbol>
+            <symbol id="menu" viewBox="0 0 24 24">
+                <path d="M4 7h16M4 12h16M4 17h16" />
+            </symbol>
+            <symbol id="close" viewBox="0 0 24 24">
+                <path d="M6 6l12 12M18 6 6 18" />
+            </symbol>
         </defs>
     </svg>
     <header class="header"><a class="brand" href="#home" aria-label="CoolNest home"><img
                 src="https://cdn.jsdelivr.net/gh/cv2k10/aircon-ad-site@main/assets/coolnest-mark.png"
                 alt=""><span><strong>Cool<span>Nest</span></strong><small>A COOLER TOMORROW</small></span></a><button
-            class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-        <nav aria-label="Main navigation"><a href="#home" class="active">Home</a><button
+            class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="main-navigation" aria-controls="main-nav"><svg
+                aria-hidden="true">
+                <use href="#menu" />
+            </svg></button>
+        <nav id="main-nav" aria-label="Main navigation"><a href="#home" class="active">Home</a><button
                 data-panel="Products">Products</button><button data-panel="Air Quality">Air Quality</button><button
                 data-panel="Support">Support</button><button data-panel="About">About</button></nav>
-        <div class="header-actions"><button class="search" data-panel="Search" aria-label="Search"><svg>
+        <div class="header-actions"><button class="search" data-panel="Search" aria-label="Search"><svg
+                    aria-hidden="true">
                     <use href="#search" />
-                </svg></button><button class="shop" data-panel="Products">Shop Now <svg>
+                </svg></button><button class="shop" data-panel="Products">Shop Now <svg aria-hidden="true">
                     <use href="#arrow" />
                 </svg></button></div>
     </header>
     <main id="home">
         <section class="hero" aria-label="Stay cool with CoolNest">
+            <video class="hero-video" autoplay muted loop playsinline aria-hidden="true"
+                poster="https://cdn.jsdelivr.net/gh/cv2k10/aircon-ad-site@main/assets/cool-living-room.webp">
+                <!-- Vertical 9:16 cut for phones: upload it, then uncomment.
+                <source media="(max-width: 600px)" src="https://cdn.jsdelivr.net/gh/cv2k10/aircon-ad-site@main/assets/cool-living-room-vertical.mp4" type="video/mp4">
+                With a vertical cut, change --heroVideoPosition in the mobile section to "center top". -->
+                <source src="https://cdn.jsdelivr.net/gh/cv2k10/aircon-ad-site@main/assets/cool-living-room.mp4"
+                    type="video/mp4">
+            </video>
             <div class="copy">
+                <div class="hero-text">
                 <p class="eyebrow">BEAT THE HEAT. LIVE BETTER. <span></span></p>
-                <h1>Stay Cool<br>While the<br><span>Heat Rises.</span></h1>
+                <h1>Stay Cool<br> While the<br> <span>Heat Rises.</span></h1>
                 <p class="intro">Powerful air conditioning for fast cooling,<br class="desktop-break"> cleaner air, and
                     all-day comfort.</p>
-                <div class="cta"><button class="primary" data-panel="Products">Explore Models <svg>
+                <div class="cta"><button class="primary" data-panel="Products">Explore Models <svg aria-hidden="true">
                             <use href="#arrow" />
                         </svg></button><button class="secondary" data-panel="Book Installation">Book
                         Installation</button></div>
+                </div>
                 <div class="features" id="features">
-                    <article><span class="icon"><svg>
+                    <article><span class="icon"><svg aria-hidden="true">
                                 <use href="#snow" />
                             </svg></span>
                         <div>
-                            <h2>FAST<br>COOLING</h2>
-                            <p>Feel the difference<br>in minutes.</p>
+                            <h2>FAST <br> COOLING</h2>
+                            <p>Feel the difference <br> in minutes.</p>
                         </div>
                     </article>
-                    <article><span class="icon"><svg>
+                    <article><span class="icon"><svg aria-hidden="true">
                                 <use href="#leaf" />
                             </svg></span>
                         <div>
-                            <h2>CLEAN<br>FRESH AIR</h2>
-                            <p>Breathe cleaner,<br>healthier air.</p>
+                            <h2>CLEAN <br> FRESH AIR</h2>
+                            <p>Breathe cleaner, <br> healthier air.</p>
                         </div>
                     </article>
-                    <article><span class="icon"><svg>
+                    <article><span class="icon"><svg aria-hidden="true">
                                 <use href="#sound" />
                             </svg></span>
                         <div>
-                            <h2>QUIET<br>COMFORT</h2>
-                            <p>Powerful cooling<br>without the noise.</p>
+                            <h2>QUIET <br> COMFORT</h2>
+                            <p>Powerful cooling <br> without the noise.</p>
                         </div>
                     </article>
                 </div>
@@ -876,15 +1213,15 @@
                 <div><strong>42°C</strong><small>OUTSIDE</small></div>
             </div>
             <div class="inside"><strong>24°C</strong><span>INSIDE</span>
-                <div><svg>
+                <div><svg aria-hidden="true">
                         <use href="#snow" />
-                    </svg><small>FAST<br>COOLING</small></div>
-                <div><svg>
+                    </svg><small>FAST<br> COOLING</small></div>
+                <div><svg aria-hidden="true">
                         <use href="#leaf" />
-                    </svg><small>CLEAN<br>FRESH AIR</small></div>
-                <div><svg>
+                    </svg><small>CLEAN<br> FRESH AIR</small></div>
+                <div><svg aria-hidden="true">
                         <use href="#sound" />
-                    </svg><small>QUIET<br>COMFORT</small></div>
+                    </svg><small>QUIET<br> COMFORT</small></div>
             </div><a class="scroll" href="#features"><span class="mouse"></span><span>SCROLL TO EXPLORE</span><span
                     class="chevron"></span></a>
         </section>
@@ -895,12 +1232,41 @@
     </dialog>
     <script>
         const dialog = document.querySelector('#info');
+        const nav = document.querySelector('#main-nav');
+        const menu = document.querySelector('.menu-toggle');
         const panels = { Products: ['Explore CoolNest models', 'Fast cooling, clean fresh air, and quiet comfort. The model catalog and shopping destination have not been connected yet.'], 'Book Installation': ['Book installation', 'Installation booking is not connected yet. To enable appointments, provide your booking link or installer contact details.'], 'Air Quality': ['Cleaner air. Everyday comfort.', 'CoolNest’s design brings clean, fresh air into your everyday living space. Product filtration specifications are not yet available.'], Support: ['CoolNest support', 'For product or installation assistance, a support email or contact number needs to be added to this page.'], About: ['A cooler tomorrow', 'Stay cool while the heat rises. CoolNest brings fast cooling, cleaner air, and all-day comfort to your home.'] };
-        function openPanel(key) { document.querySelector('#dialog-title').textContent = key === 'Search' ? 'Search CoolNest' : panels[key][0]; const content = document.querySelector('#dialog-content'); content.replaceChildren(); if (key === 'Search') { const label = document.createElement('label'); label.textContent = 'What are you looking for?'; const input = document.createElement('input'); input.type = 'search'; input.placeholder = 'Try cooling, installation, or support'; const result = document.createElement('p'); result.textContent = 'Search the information available on this page.'; input.addEventListener('input', () => { const q = input.value.trim().toLowerCase(); result.textContent = !q ? 'Search the information available on this page.' : /install|book/.test(q) ? panels['Book Installation'][1] : /support|help/.test(q) ? panels.Support[1] : /cool|model|air|product/.test(q) ? panels.Products[1] : 'No matching information. Try cooling, installation, or support.' }); label.append(input); content.append(label, result) } else { const p = document.createElement('p'); p.textContent = panels[key][1]; content.append(p) } dialog.showModal(); document.querySelector('nav').classList.remove('open'); document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false') }
-        document.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => openPanel(button.dataset.panel)));
-        document.querySelectorAll('.close,.dialog-done').forEach(button => button.addEventListener('click', () => dialog.close())); dialog.addEventListener('click', e => { if (e.target === dialog) { const rect = dialog.getBoundingClientRect(); if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) dialog.close() } });
-        const menu = document.querySelector('.menu-toggle'); menu.addEventListener('click', () => { const open = document.querySelector('nav').classList.toggle('open'); menu.setAttribute('aria-expanded', String(open)); menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation') }); document.querySelector('nav a').addEventListener('click', () => { document.querySelector('nav').classList.remove('open'); menu.setAttribute('aria-expanded', 'false') });
 
+        function setMenu(open) {
+            nav.classList.toggle('open', open);
+            menu.setAttribute('aria-expanded', String(open));
+            menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+            menu.querySelector('use').setAttribute('href', open ? '#close' : '#menu');
+        }
+
+        function openPanel(key) {
+            document.querySelector('#dialog-title').textContent = key === 'Search' ? 'Search CoolNest' : panels[key][0];
+            const content = document.querySelector('#dialog-content');
+            content.replaceChildren();
+            if (key === 'Search') {
+                const label = document.createElement('label'); label.textContent = 'What are you looking for?';
+                const input = document.createElement('input'); input.type = 'search'; input.placeholder = 'Try cooling, installation, or support';
+                const result = document.createElement('p'); result.textContent = 'Search the information available on this page.';
+                input.addEventListener('input', () => { const q = input.value.trim().toLowerCase(); result.textContent = !q ? 'Search the information available on this page.' : /install|book/.test(q) ? panels['Book Installation'][1] : /support|help/.test(q) ? panels.Support[1] : /cool|model|air|product/.test(q) ? panels.Products[1] : 'No matching information. Try cooling, installation, or support.' });
+                label.append(input); content.append(label, result);
+            } else {
+                const p = document.createElement('p'); p.textContent = panels[key][1]; content.append(p);
+            }
+            dialog.showModal();
+            setMenu(false);
+        }
+
+        document.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => openPanel(button.dataset.panel)));
+        document.querySelectorAll('.close,.dialog-done').forEach(button => button.addEventListener('click', () => dialog.close()));
+        dialog.addEventListener('click', e => { if (e.target === dialog) { const r = dialog.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dialog.close() } });
+
+        menu.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+        nav.querySelector('a').addEventListener('click', () => setMenu(false));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); menu.focus() } });
     </script>
 </body>
 

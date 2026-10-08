@@ -6,3 +6,85 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media(min-width:601px) and (max-width:950px){.hero{min-height:0;padding-bottom:52%;background-size:100% auto;background-position:center bottom;background-color:#031c32}.hero:before{background:none}.copy{padding:60px 0 55px;width:min(90%,620px)}.inside{top:auto;bottom:24%;right:9%}.inside div{display:none}.scroll .mouse{display:none}}
 .thermometer{width:28px;height:64px;stroke-width:1.7}
+
+/* Mobile layout: readable type, consistent gutters, and generous touch targets. */
+@media(max-width:950px){
+  .menu-toggle,.search{min-width:44px;min-height:44px;display:grid;place-items:center;padding:10px}
+  .header nav.open{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:16px 5%}
+  .header nav a,.header nav button{text-align:left;padding:14px 16px;min-height:48px;border-radius:8px}
+  .header nav .active{background:#eef6ff}
+  .header nav .active:after{display:none}
+}
+@media(max-width:600px){
+  .header{height:72px;padding:0 20px;gap:4px}
+  .brand{gap:8px;flex-shrink:0}
+  .brand strong{font-size:28px;letter-spacing:-1.2px}
+  .brand small{font-size:8px;letter-spacing:1.6px;margin-top:4px}
+  .brand img{width:34px;height:30px}
+  .header-actions{margin-left:auto}
+  .hero{padding-bottom:340px;background-size:auto 340px;background-position:right bottom}
+  .hero:before{background:linear-gradient(to bottom,#031c32 0%,#031c32 calc(100% - 340px),transparent calc(100% - 280px))}
+  .copy{padding:36px 24px 28px;width:100%;margin:0}
+  .eyebrow{font-size:11px;line-height:1.5;letter-spacing:1.7px;margin-bottom:20px;gap:10px}
+  .eyebrow span{flex-shrink:0;width:20px}
+  h1{font-size:clamp(42px,11.5vw,64px);line-height:1.04;letter-spacing:-1.6px}
+  .intro{font-size:17px;line-height:1.55;margin:20px 0 24px;max-width:40ch;color:#e2edf5}
+  .cta{display:grid;grid-template-columns:1fr;gap:12px}
+  .cta button{width:100%;min-height:52px;height:auto;padding:15px 20px;font-size:16px;line-height:1.25;display:flex;justify-content:center;align-items:center}
+  .features{display:grid;grid-template-columns:1fr;width:100%;gap:0;margin-top:28px}
+  .features article,.features article:first-child,.features article:last-child{display:flex;align-items:center;gap:16px;padding:16px 0;border:0;border-bottom:1px solid #72b3ce40}
+  .features article:last-child{border-bottom:0;padding-bottom:0}
+  .icon{width:44px;height:44px;border-width:1.5px}
+  .icon svg{width:30px;height:30px}
+  .features h2{font-size:14px;font-weight:600;line-height:1.35;margin:0 0 4px;letter-spacing:.4px}
+  .features p{font-size:14px;line-height:1.5;margin:0;color:#bfd6e5}
+  .features br{display:none}
+  .features br:after{content:' '}
+  .inside{right:24px;bottom:220px;padding:10px 14px;background:#062238b3;border:1px solid #aeeaff55;border-radius:12px}
+  .inside>strong{font-size:28px;line-height:1.1}
+  .inside>span{font-size:12px;line-height:1.5}
+  .scroll{display:none}
+  dialog{padding:28px 24px;max-height:calc(100svh - 32px);overflow:auto}
+  dialog h2{font-size:26px;line-height:1.2;margin-right:32px}
+  dialog p{font-size:16px;line-height:1.6}
+  dialog .close{width:44px;height:44px;right:8px;top:8px}
+  .dialog-done{min-height:48px;font-size:16px}
+  dialog input{font-size:16px;min-height:48px;margin-top:8px}
+}
+@media(max-width:360px){
+  .header{padding:0 12px}
+  .copy{padding-left:20px;padding-right:20px}
+  .eyebrow{font-size:10px;letter-spacing:1.3px}
+  .brand strong{font-size:26px}
+}
+
+/* Put the room scene behind the opening mobile hero. */
+@media(max-width:600px){
+  .hero{padding-bottom:0;background-size:auto max(620px,100svh);background-position:82% top;background-color:#031c32}
+  .hero:before{background:linear-gradient(180deg,#031c32e6 0%,#031c32b3 28%,#031c3259 48%,#031c32e6 68%,#031c32 82%)}
+  .copy{padding-top:32px;padding-bottom:32px}
+  .intro{color:#f0f6fa;text-shadow:0 1px 8px #031c32}
+  .secondary{background:#031c32a6}
+  .features{margin-top:32px;padding:16px;border:1px solid #aeeaff30;border-radius:16px;background:#031c32e6;backdrop-filter:blur(8px)}
+  .features article:first-child{padding-top:0}
+  .inside{display:none}
+}
+
+/* Tablet hero keeps the room visible in the first viewport. */
+@media(min-width:601px) and (max-width:950px){
+  .hero{min-height:calc(100svh - 76px);padding-bottom:0;background-size:cover;background-position:85% top}
+  .hero:before{background:linear-gradient(90deg,#031c32dc 0%,#031c32a6 48%,#031c3240 100%)}
+  .copy{margin-left:5%;width:min(90%,620px);padding:clamp(40px,6vh,72px) 0 48px}
+  h1{font-size:clamp(60px,9vw,82px);line-height:1;letter-spacing:-2px}
+  .intro{font-size:21px;line-height:1.5;max-width:40ch;margin:24px 0 28px;text-shadow:0 1px 8px #031c32}
+  .cta{gap:16px;flex-wrap:wrap}
+  .cta button{font-size:18px;min-height:56px;height:auto;padding:16px 28px}
+  .secondary{background:#031c32a6}
+  .features{width:100%;margin-top:40px;padding:20px 12px;border:1px solid #aeeaff30;border-radius:16px;background:#031c32d9;backdrop-filter:blur(8px)}
+  .features article{gap:12px;padding:0 12px;min-width:0}
+  .features h2{font-size:14px;line-height:1.4}
+  .features p{font-size:13px;line-height:1.5}
+  .icon{width:44px;height:44px}
+  .icon svg{width:30px;height:30px}
+  .inside,.scroll{display:none}
+}
